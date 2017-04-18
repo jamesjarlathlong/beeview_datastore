@@ -29,8 +29,8 @@ def index():
 
 @application.route('/experiments', methods = ['GET'])
 def experiments():
-    #all_experiments = [extract_meta(i) for i in experiment_meta.query.all()]
-    all_experiments = [{'name':'exp1','excitation':'fake','range':10000,'damage':'fake','minseq':2,'maxseq':12}]
+    all_experiments = [extract_meta(i) for i in experiment_meta.query.all()]
+    #all_experiments = [{'name':'exp1','excitation':'fake','range':10000,'damage':'fake','minseq':2,'maxseq':12}]
     print('all experiments: ', all_experiments)
     return Response(json.dumps(all_experiments), status = 200)
 
