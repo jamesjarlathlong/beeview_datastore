@@ -1,0 +1,279 @@
+var _user$project$Main$viewDownload = function (exp) {
+	return A2(
+		_evancz$elm_sortable_table$Table$HtmlDetails,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$form,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$action('/large.csv'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$method('post'),
+						_1: {ctor: '[]'}
+					}
+				},
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$input,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$type_('hidden'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$name('folder_name'),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$value(exp.name),
+									_1: {ctor: '[]'}
+								}
+							}
+						},
+						{ctor: '[]'}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$input,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$type_('hidden'),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$name('min_sequence'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$value(
+											_elm_lang$core$Basics$toString(exp.minseq)),
+										_1: {ctor: '[]'}
+									}
+								}
+							},
+							{ctor: '[]'}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$input,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$type_('hidden'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$name('max_sequence'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$value(
+												_elm_lang$core$Basics$toString(exp.maxseq)),
+											_1: {ctor: '[]'}
+										}
+									}
+								},
+								{ctor: '[]'}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$button,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$type_('submit'),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('Download csv'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$Main$downloadColumn = _evancz$elm_sortable_table$Table$veryCustomColumn(
+	{name: '', viewData: _user$project$Main$viewDownload, sorter: _evancz$elm_sortable_table$Table$unsortable});
+var _user$project$Main$subscriptions = function (model) {
+	return _elm_lang$core$Platform_Sub$none;
+};
+var _user$project$Main$Experiment = F6(
+	function (a, b, c, d, e, f) {
+		return {name: a, excitation: b, damage: c, minseq: d, maxseq: e, range: f};
+	});
+var _user$project$Main$decodeExps = A7(
+	_elm_lang$core$Json_Decode$map6,
+	_user$project$Main$Experiment,
+	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode$field, 'excitation', _elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode$field, 'damage', _elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode$field, 'minseq', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'maxseq', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'range', _elm_lang$core$Json_Decode$int));
+var _user$project$Main$decodeListExperiments = _elm_lang$core$Json_Decode$list(_user$project$Main$decodeExps);
+var _user$project$Main$Model = F3(
+	function (a, b, c) {
+		return {experimentlist: a, tableState: b, query: c};
+	});
+var _user$project$Main$SetTableState = function (a) {
+	return {ctor: 'SetTableState', _0: a};
+};
+var _user$project$Main$config = _evancz$elm_sortable_table$Table$config(
+	{
+		toId: function (_) {
+			return _.name;
+		},
+		toMsg: _user$project$Main$SetTableState,
+		columns: {
+			ctor: '::',
+			_0: A2(
+				_evancz$elm_sortable_table$Table$stringColumn,
+				'Name',
+				function (_) {
+					return _.name;
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_evancz$elm_sortable_table$Table$intColumn,
+					'Length (s)',
+					function (_) {
+						return _.range;
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_evancz$elm_sortable_table$Table$stringColumn,
+						'Damage',
+						function (_) {
+							return _.damage;
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_evancz$elm_sortable_table$Table$stringColumn,
+							'Excitation',
+							function (_) {
+								return _.excitation;
+							}),
+						_1: {
+							ctor: '::',
+							_0: _user$project$Main$downloadColumn,
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			}
+		}
+	});
+var _user$project$Main$SetQuery = function (a) {
+	return {ctor: 'SetQuery', _0: a};
+};
+var _user$project$Main$view = function (_p0) {
+	var _p1 = _p0;
+	var lowerQuery = _elm_lang$core$String$toLower(_p1.query);
+	var acceptableExperiments = A2(
+		_elm_lang$core$List$filter,
+		function (_p2) {
+			return A2(
+				_elm_lang$core$String$contains,
+				lowerQuery,
+				_elm_lang$core$String$toLower(
+					function (_) {
+						return _.name;
+					}(_p2)));
+		},
+		_p1.experimentlist);
+	return A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$h1,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('Available experiments'),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$input,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$placeholder('Search by Name'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Events$onInput(_user$project$Main$SetQuery),
+							_1: {ctor: '[]'}
+						}
+					},
+					{ctor: '[]'}),
+				_1: {
+					ctor: '::',
+					_0: A3(_evancz$elm_sortable_table$Table$view, _user$project$Main$config, _p1.tableState, acceptableExperiments),
+					_1: {ctor: '[]'}
+				}
+			}
+		});
+};
+var _user$project$Main$FetchList = function (a) {
+	return {ctor: 'FetchList', _0: a};
+};
+var _user$project$Main$fetchExperiments = function () {
+	var url = 'http://0.0.0.0:5000/experiments';
+	return A2(
+		_elm_lang$http$Http$send,
+		_user$project$Main$FetchList,
+		A2(_elm_lang$http$Http$get, url, _user$project$Main$decodeListExperiments));
+}();
+var _user$project$Main$init = function () {
+	var model = {
+		experimentlist: {ctor: '[]'},
+		tableState: _evancz$elm_sortable_table$Table$initialSort('name'),
+		query: ''
+	};
+	return {ctor: '_Tuple2', _0: model, _1: _user$project$Main$fetchExperiments};
+}();
+var _user$project$Main$update = F2(
+	function (msg, model) {
+		var _p3 = msg;
+		switch (_p3.ctor) {
+			case 'Experiments':
+				return {ctor: '_Tuple2', _0: model, _1: _user$project$Main$fetchExperiments};
+			case 'FetchList':
+				if (_p3._0.ctor === 'Ok') {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{experimentlist: _p3._0._0}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
+			case 'SetQuery':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{query: _p3._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			default:
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{tableState: _p3._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+		}
+	});
+var _user$project$Main$main = _elm_lang$html$Html$program(
+	{init: _user$project$Main$init, view: _user$project$Main$view, update: _user$project$Main$update, subscriptions: _user$project$Main$subscriptions})();
+var _user$project$Main$Experiments = {ctor: 'Experiments'};
