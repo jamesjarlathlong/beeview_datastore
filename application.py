@@ -10,7 +10,6 @@ Step-by-step tutorial: https://medium.com/@rodkey/deploying-a-flask-application-
 from flask import (Flask, render_template, request, Response, make_response, jsonify)
 from application import db
 from application.models import accel_data, experiment_meta
-from application.forms import RetrieveDBInfo
 import config
 import json
 import collections
@@ -19,8 +18,8 @@ import csv
 from sqlalchemy import func
 import itertools
 # Elastic Beanstalk initalization
-application = Flask(__name__)
-application.debug=True
+
+from application import application
 # change this to your own value
 application.secret_key = config.SECRET_KEY
 
