@@ -130,7 +130,7 @@ fetchExperiments: Cmd Msg
 fetchExperiments =
   let
     url =
-      "http://0.0.0.0:5000/experiments"
+      "http://lissbenchmark.us-east-1.elasticbeanstalk.com/experiments"
   in
     Http.send FetchList (Http.get url decodeListExperiments)
 
