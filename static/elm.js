@@ -9615,6 +9615,17 @@ var _user$project$Main$downloadColumn = _evancz$elm_sortable_table$Table$veryCus
 var _user$project$Main$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$none;
 };
+var _user$project$Main$negate = F3(
+	function (chosen, index, element) {
+		return _elm_lang$core$Native_Utils.eq(chosen, index) ? (!element) : element;
+	});
+var _user$project$Main$negateArray = F2(
+	function (index, arr) {
+		return A2(
+			_elm_lang$core$Array$indexedMap,
+			_user$project$Main$negate(index),
+			arr);
+	});
 var _user$project$Main$Experiment = F6(
 	function (a, b, c, d, e, f) {
 		return {name: a, excitation: b, damage: c, minseq: d, maxseq: e, range: f};
@@ -9704,7 +9715,16 @@ var _user$project$Main$view = function (_p0) {
 		_p1.experimentlist);
 	return A2(
 		_elm_lang$html$Html$div,
-		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$style(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'font-family', _1: 'Arial'},
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		},
 		{
 			ctor: '::',
 			_0: A2(
