@@ -144,7 +144,7 @@ view { experimentlist, tableState, query, lenParams, freqParams} =
       List.filter (String.contains lowerQuery << String.toLower << .name) withlengthsfreqs
   in
     div [class "container"]
-      [ h1 [] [ text "Available experiments" ]
+      [ h1 [] [ text "Experiments" ]
       , input [ placeholder "Search by Name", onInput SetQuery ] []
       , Table.view config tableState acceptableExperiments
       ]
