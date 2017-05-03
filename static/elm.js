@@ -10155,7 +10155,7 @@ var _user$project$Main$FetchList = function (a) {
 	return {ctor: 'FetchList', _0: a};
 };
 var _user$project$Main$fetchExperiments = function () {
-	var url = 'http://lissbenchmark.us-east-1.elasticbeanstalk.com/';
+	var url = 'http://lissbenchmark.us-east-1.elasticbeanstalk.com/experiments';
 	return A2(
 		_elm_lang$http$Http$send,
 		_user$project$Main$FetchList,
