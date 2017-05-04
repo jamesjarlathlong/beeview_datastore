@@ -5,7 +5,7 @@ import Html.Attributes as H exposing (..)
 import Html.Events exposing (..)
 import Http
 import Json.Decode exposing (Decoder, field, succeed, map2, list, string, bool, dict, int, maybe, decodeString, map)
-import Table
+import Table exposing (defaultCustomizations)
 import Array
 import Dict
 import Html.Events.Extra exposing (targetValueIntParse)
@@ -181,7 +181,14 @@ config =
         , inputLength
         , inputFreq
         , downloadColumn]
+    , customizations =
+        { defaultCustomizations | tableAttrs = toRowAttrs }
     }
+
+toRowAttrs : data -> List (Attribute Msg)
+toRowAttrs _ =
+  [ style [ ("color", "#f05f40")]
+  ]
 
 downloadColumn : Table.Column Experiment Msg
 downloadColumn =
