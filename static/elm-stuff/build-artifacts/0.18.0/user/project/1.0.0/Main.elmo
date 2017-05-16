@@ -168,6 +168,12 @@ var _user$project$Main$viewDownload = function (exp) {
 };
 var _user$project$Main$downloadColumn = _evancz$elm_sortable_table$Table$veryCustomColumn(
 	{name: 'Download', viewData: _user$project$Main$viewDownload, sorter: _evancz$elm_sortable_table$Table$unsortable});
+var _user$project$Main$toRowAttrs = {
+	ctor: '::',
+	_0: _elm_lang$html$Html_Attributes$style(
+		{ctor: '[]'}),
+	_1: {ctor: '[]'}
+};
 var _user$project$Main$getExpFreq = F2(
 	function (fname, d) {
 		return A2(
@@ -329,7 +335,7 @@ var _user$project$Main$inputLength = _evancz$elm_sortable_table$Table$veryCustom
 var _user$project$Main$SetTableState = function (a) {
 	return {ctor: 'SetTableState', _0: a};
 };
-var _user$project$Main$config = _evancz$elm_sortable_table$Table$config(
+var _user$project$Main$config = _evancz$elm_sortable_table$Table$customConfig(
 	{
 		toId: function (_) {
 			return _.name;
@@ -383,7 +389,10 @@ var _user$project$Main$config = _evancz$elm_sortable_table$Table$config(
 					}
 				}
 			}
-		}
+		},
+		customizations: _elm_lang$core$Native_Utils.update(
+			_evancz$elm_sortable_table$Table$defaultCustomizations,
+			{tableAttrs: _user$project$Main$toRowAttrs})
 	});
 var _user$project$Main$SetQuery = function (a) {
 	return {ctor: 'SetQuery', _0: a};
@@ -454,7 +463,7 @@ var _user$project$Main$FetchList = function (a) {
 	return {ctor: 'FetchList', _0: a};
 };
 var _user$project$Main$fetchExperiments = function () {
-	var url = 'http://lissbenchmark.us-east-1.elasticbeanstalk.com/experiments';
+	var url = 'http://127.0.0.1:5000/experiments';
 	return A2(
 		_elm_lang$http$Http$send,
 		_user$project$Main$FetchList,

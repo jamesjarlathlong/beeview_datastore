@@ -170,7 +170,7 @@ getExpFreq fname d =
 
 config : Table.Config Experiment Msg
 config =
-  Table.config
+  Table.customConfig
     { toId = .name
     , toMsg = SetTableState
     , columns =
@@ -185,9 +185,10 @@ config =
         { defaultCustomizations | tableAttrs = toRowAttrs }
     }
 
-toRowAttrs : data -> List (Attribute Msg)
-toRowAttrs _ =
-  [ style [ ("color", "#f05f40")]
+
+toRowAttrs : List (Attribute Msg)
+toRowAttrs =
+  [ style []
   ]
 
 downloadColumn : Table.Column Experiment Msg
@@ -264,7 +265,7 @@ fetchExperiments: Cmd Msg
 fetchExperiments =
   let
     url =
-      "http://lissbenchmark.us-east-1.elasticbeanstalk.com/experiments"
+      "http://127.0.0.1:5000/experiments"
   in
     Http.send FetchList (Http.get url decodeListExperiments)
 
