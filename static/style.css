@@ -7,7 +7,7 @@ html *
 }
 table { 
   table-layout: fixed;
-  width: 80%
+  width: 100%
 }
 td {
 overflow: hidden;
