@@ -9,7 +9,7 @@ Step-by-step tutorial: https://medium.com/@rodkey/deploying-a-flask-application-
 
 from flask import (Flask, render_template, request, Response, make_response, jsonify)
 from application import db
-from application.models import accel_data, experiment_meta
+from application.models import accel_data, experiment_meta, file_meta
 import config
 import json
 import collections
@@ -18,20 +18,36 @@ import csv
 from sqlalchemy import func
 import itertools
 import functools
+import psycopg2
 # Elastic Beanstalk initalization
 
 from application import application
 # change this to your own value
 
-
+def with_connection(mod, db_filename, f):
+    def with_connection_(*args, **kwargs):
+        # or use a pool, or a factory function...
+        cnn = mod.connect(db_filename)
+        try:
+            rv = f(cnn, *args, **kwargs)
+        except Exception as e:
+            cnn.rollback()
+            raise
+        else:
+            cnn.commit() # or maybe not
+        finally:
+            cnn.close()
+        return rv
+    return with_connection_
+psycopg_connector = functools.partial(with_connection, psycopg2, config.SQLALCHEMY_DATABASE_URI)
 @application.route('/', methods=['GET'])
 def index():
     return make_response(open('templates/index.html').read())
 
 @application.route('/experiments', methods = ['GET'])
 def experiments():
-    all_experiments = [extract_meta(i) for i in experiment_meta.query.all()]
-    #all_experiments = [{'name':'exp1','excitation':'fake','range':10000,'damage':'fake','minseq':2,'maxseq':12}]
+    #all_experiments = [extract_meta(i) for i in experiment_meta.query.all()]
+    all_experiments = [{'name':'experiment1','excitation':'longambientfake','range':10000000,'damage':'undamagedfake','minseq':2,'maxseq':120000000}]
     print('all experiments: ', all_experiments)
     return Response(json.dumps(all_experiments), status = 200)
 
@@ -62,6 +78,9 @@ def int_to_g(accel):
     return num_to_g
 def possible_nodes():
     return [5, 6, 7, 15, 17, 18, 20, 21, 22, 23, 24, 25, 27, 29, 30, 31, 32, 33, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 49, 52, 53, 54, 55, 56, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69]    
+def num_sensors():
+    return len(list(itertools.product(possible_nodes(), ['x','y','z'])))
+
 @application.route('/large.csv', methods = ['POST'])
 def generate_large_csv():
     #start_seq = request.form.min_sequence
@@ -106,7 +125,6 @@ def get_file_writer(arrs, noderange):
         headerwriter.writeheader()
         yield csvfile.getvalue()
         for i in arrays:
-            print('got an arr', i)
             test_dixt = collections.OrderedDict({k:i.get(k,None) for k in header_dictionary})
             csvfile = io.StringIO()
             csvwriter = csv.DictWriter(csvfile, delimiter=',', fieldnames = header_dictionary)
