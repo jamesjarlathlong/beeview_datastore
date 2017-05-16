@@ -6,6 +6,11 @@ html *
 
 }
 table { 
-    border-spacing: 10px;
-    border-collapse: separate;
+  table-layout: fixed;
+  width: 80%
+}
+td {
+overflow: hidden;
+max-width: 100px;
+word-wrap: break-word;
 }
