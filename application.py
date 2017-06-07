@@ -66,7 +66,7 @@ def form_query(specs):
     return vectors
 
 def get_file_writer(arrs, noderange):
-    headers = ["seq_id"]+[stringify(i) for i in itertools.product(noderange, ['x','y','z'])]
+    headers = ["seq_id"]+[helpers.stringify(i) for i in itertools.product(noderange, ['x','y','z'])]
     header_dict = collections.OrderedDict()
     for k in headers:
         header_dict[k] = None
