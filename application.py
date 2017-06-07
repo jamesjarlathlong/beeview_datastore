@@ -46,7 +46,7 @@ def generate_large_csv():
     query = form_query(specs)
     print('formed the query')
     arrs = helpers.get_arrs(query)
-    print('got the arrs')
+    print('got the arrs', next(arrs))
     noderange = helpers.possible_nodes()
     writer = get_file_writer(arrs, noderange)
     response = Response(writer(), mimetype='text/csv')
