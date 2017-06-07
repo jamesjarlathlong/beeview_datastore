@@ -5,7 +5,7 @@ import Html.Attributes as H exposing (..)
 import Html.Events exposing (..)
 import Http
 import Json.Decode exposing (Decoder, field, succeed, map2, list, string, bool, dict, int, maybe, decodeString, map)
-import Table
+import Table exposing (defaultCustomizations)
 import Array
 import Dict
 import Html.Events.Extra exposing (targetValueIntParse)
@@ -144,7 +144,7 @@ view { experimentlist, tableState, query, lenParams, freqParams} =
       List.filter (String.contains lowerQuery << String.toLower << .name) withlengthsfreqs
   in
     div [class "container"]
-      [ h1 [] [ text "Available experiments" ]
+      [ h1 [] [ text "Experiments" ]
       , input [ placeholder "Search by Name", onInput SetQuery ] []
       , Table.view config tableState acceptableExperiments
       ]
@@ -170,7 +170,7 @@ getExpFreq fname d =
 
 config : Table.Config Experiment Msg
 config =
-  Table.config
+  Table.customConfig
     { toId = .name
     , toMsg = SetTableState
     , columns =
@@ -181,7 +181,15 @@ config =
         , inputLength
         , inputFreq
         , downloadColumn]
+    , customizations =
+        { defaultCustomizations | tableAttrs = toRowAttrs }
     }
+
+
+toRowAttrs : List (Attribute Msg)
+toRowAttrs =
+  [ style []
+  ]
 
 downloadColumn : Table.Column Experiment Msg
 downloadColumn =

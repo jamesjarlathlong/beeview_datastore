@@ -20,14 +20,10 @@ from sqlalchemy import func
 import itertools
 import functools
 import psycopg2
-from helper import with_connection
 # Elastic Beanstalk initalization
 
 from application import application
-# change this to your own value
 
-
-psycopg_connector = functools.partial(with_connection, psycopg2, config.SQLALCHEMY_DATABASE_URI)
 @application.route('/', methods=['GET'])
 def index():
     return make_response(open('templates/index.html').read())

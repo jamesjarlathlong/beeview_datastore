@@ -9869,6 +9869,12 @@ var _user$project$Main$viewDownload = function (exp) {
 };
 var _user$project$Main$downloadColumn = _evancz$elm_sortable_table$Table$veryCustomColumn(
 	{name: 'Download', viewData: _user$project$Main$viewDownload, sorter: _evancz$elm_sortable_table$Table$unsortable});
+var _user$project$Main$toRowAttrs = {
+	ctor: '::',
+	_0: _elm_lang$html$Html_Attributes$style(
+		{ctor: '[]'}),
+	_1: {ctor: '[]'}
+};
 var _user$project$Main$getExpFreq = F2(
 	function (fname, d) {
 		return A2(
@@ -10030,7 +10036,7 @@ var _user$project$Main$inputLength = _evancz$elm_sortable_table$Table$veryCustom
 var _user$project$Main$SetTableState = function (a) {
 	return {ctor: 'SetTableState', _0: a};
 };
-var _user$project$Main$config = _evancz$elm_sortable_table$Table$config(
+var _user$project$Main$config = _evancz$elm_sortable_table$Table$customConfig(
 	{
 		toId: function (_) {
 			return _.name;
@@ -10084,7 +10090,10 @@ var _user$project$Main$config = _evancz$elm_sortable_table$Table$config(
 					}
 				}
 			}
-		}
+		},
+		customizations: _elm_lang$core$Native_Utils.update(
+			_evancz$elm_sortable_table$Table$defaultCustomizations,
+			{tableAttrs: _user$project$Main$toRowAttrs})
 	});
 var _user$project$Main$SetQuery = function (a) {
 	return {ctor: 'SetQuery', _0: a};
@@ -10126,7 +10135,7 @@ var _user$project$Main$view = function (_p4) {
 				{ctor: '[]'},
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html$text('Available experiments'),
+					_0: _elm_lang$html$Html$text('Experiments'),
 					_1: {ctor: '[]'}
 				}),
 			_1: {
