@@ -7,7 +7,7 @@ Author: Scott Rodkey - rodkeyscott@gmail.com
 Step-by-step tutorial: https://medium.com/@rodkey/deploying-a-flask-application-on-aws-a72daba6bb80
 '''
 
-from flask import (Flask, render_template, request, Response, make_response, jsonify)
+from flask import (Flask, render_template, request, Response, make_response, jsonify, stream_with_context)
 from application import db
 from application.models import accel_data, experiment_meta, file_meta
 import application.query_helpers as helpers
@@ -46,10 +46,10 @@ def generate_large_csv():
     query = form_query(specs)
     print('formed the query')
     arrs = helpers.get_arrs(query)
-    print('got the arrs', next(arrs))
+    print('got the arrs')
     noderange = helpers.possible_nodes()
     writer = get_file_writer(arrs, noderange)
-    response = Response(writer(), mimetype='text/csv')
+    response = Response(stream_with_context(writer()), mimetype='text/csv')
     #response = Response(status = 200)
     response.headers["Content-Disposition"] = "attachment; filename=test.csv"
     return response
