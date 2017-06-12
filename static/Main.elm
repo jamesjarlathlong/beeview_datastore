@@ -116,7 +116,7 @@ view { experimentlist, tableState, query, downloadParams} =
       List.filter (String.contains lowerQuery << String.toLower << .name) withlengths
   in
     div [style [ ("font-family", "Arial") ]]
-      [ h1 [] [ text "Available experiments" ]
+      [ h1 [] [ text "Experiments" ]
       , input [ placeholder "Search by Name", onInput SetQuery ] []
       , Table.view config tableState acceptableExperiments
       ]
@@ -186,7 +186,7 @@ fetchExperiments: Cmd Msg
 fetchExperiments =
   let
     url =
-      "http://lissbenchmark.us-east-1.elasticbeanstalk.com/experiments"
+      "http://127.0.0.1:5000/experiments"
   in
     Http.send FetchList (Http.get url decodeListExperiments)
 

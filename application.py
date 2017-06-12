@@ -38,7 +38,8 @@ def extract_meta(row):
     range_in_secs = int((row.max_sequence_id-row.min_sequence_id)/1000)
     return {'name': row.folder_name, 'range':range_in_secs ,
             'damage': row.damage, 'excitation': row.excitation,
-            'minseq':row.min_sequence_id, 'maxseq':row.max_sequence_id}
+            'minseq':row.min_sequence_id, 'maxseq':row.max_sequence_id,
+            'userlength':1}
 def just_data(row):
     return row[1]
 def dict_translator(translation, d):

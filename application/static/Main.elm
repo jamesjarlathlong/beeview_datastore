@@ -2,11 +2,13 @@
 -- https://guide.elm-lang.org/architecture/effects/http.html
 
 import Html exposing (..)
-import Html.Attributes exposing (..)
+import Html.Attributes as H exposing (..)
 import Html.Events exposing (..)
 import Http
 import Json.Decode exposing (Decoder, field, succeed, map2, list, string, bool, dict, int, maybe, decodeString, map)
 import Table
+import Array
+import Dict
 
 main =
   Html.program
@@ -24,12 +26,18 @@ type alias Experiment =
   , minseq: Int
   , maxseq: Int
   , range: Int
+  , userlength: String
+  }
+type alias FileLength = 
+  { file: String
+  , len: String
   }
 
 type alias Model =
   { experimentlist : List Experiment
   , tableState : Table.State
   , query : String
+  , downloadParams: Dict.Dict String String
   }
 
 
@@ -40,6 +48,7 @@ init =
       { experimentlist = []
       , tableState = Table.initialSort "name"
       , query = ""
+      , downloadParams = Dict.empty
       }
   in
     ( model, fetchExperiments )
@@ -51,6 +60,16 @@ type Msg
   | FetchList (Result Http.Error (List Experiment))
   | SetQuery String
   | SetTableState Table.State
+  | SelectSubrange FileLength
+
+negate: Int -> Int -> Bool -> Bool
+negate chosen index element =
+    if chosen == index then not element else element
+
+negateArray: Int -> Array.Array Bool -> Array.Array Bool
+negateArray index arr = 
+  Array.indexedMap (negate index) arr
+
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -75,6 +94,10 @@ update msg model =
       ({ model | tableState = newState }
       , Cmd.none
       )
+    SelectSubrange newrange ->
+      ({model|downloadParams = (Dict.insert newrange.file newrange.len) model.downloadParams}
+      , Cmd.none
+      )
 
 -- SUBSCRIPTIONS
 subscriptions : Model -> Sub Msg
@@ -83,20 +106,29 @@ subscriptions model =
 
 -- VIEW
 view : Model -> Html Msg
-view { experimentlist, tableState, query } =
+view { experimentlist, tableState, query, downloadParams} =
   let
     lowerQuery =
       String.toLower query
-
+    withlengths = 
+      List.map (zipExperimentLengths downloadParams) experimentlist
     acceptableExperiments =
-      List.filter (String.contains lowerQuery << String.toLower << .name) experimentlist
+      List.filter (String.contains lowerQuery << String.toLower << .name) withlengths
   in
-    div []
-      [ h1 [] [ text "Available experiments" ]
+    div [style [ ("font-family", "Arial") ]]
+      [ h1 [] [ text "Experiments" ]
       , input [ placeholder "Search by Name", onInput SetQuery ] []
       , Table.view config tableState acceptableExperiments
       ]
+zipExperimentLengths: Dict.Dict String String -> Experiment -> Experiment
+zipExperimentLengths userdefs exp =
+  let lenInSecs = getExpLength exp.name userdefs
+  in {exp|userlength = lenInSecs}
 
+getExpLength: String -> Dict.Dict String String -> String
+getExpLength fname d =
+  Dict.get fname d
+      |> Maybe.withDefault "0"
 config : Table.Config Experiment Msg
 config =
   Table.config
@@ -107,6 +139,7 @@ config =
         , Table.intColumn "Length (s)" .range
         , Table.stringColumn "Damage" .damage
         , Table.stringColumn "Excitation" .excitation
+        , inputLength
         , downloadColumn]
     }
 
@@ -117,31 +150,54 @@ downloadColumn =
     , viewData = viewDownload
     , sorter = Table.unsortable
     }
+
 viewDownload : Experiment -> Table.HtmlDetails Msg
 viewDownload exp =
   Table.HtmlDetails []
     [Html.form [action "/large.csv", method "post"] 
                [input [type_ "hidden", name "folder_name", value exp.name] []
+               ,input [type_ "hidden", name "user_length", value (toString exp.userlength)] []
                ,input [type_ "hidden", name "min_sequence", value (toString exp.minseq)] []
                ,input [type_ "hidden", name "max_sequence", value (toString exp.maxseq)] []
-               , button [type_ "submit"] [text "Download csv"] ]]
+               ,button [type_ "submit"] [text "Download csv"] ]]
+inputLength : Table.Column Experiment Msg
+inputLength =
+  Table.veryCustomColumn
+    { name = ""
+    , viewData = viewInput
+    , sorter = Table.unsortable
+    }
+applyFilelen: String -> String -> Msg
+applyFilelen filename desiredlen =
+  SelectSubrange (FileLength filename desiredlen)
 
+viewInput : Experiment -> Table.HtmlDetails Msg
+viewInput exp =
+  Table.HtmlDetails []
+               [ input 
+                  [ type_ "number"
+                  , H.min "0"
+                  , H.max (toString exp.range)
+                  , onInput (applyFilelen exp.name)
+                  ]
+                  []
+               ]
 fetchExperiments: Cmd Msg
 fetchExperiments =
   let
     url =
-      "http://0.0.0.0:5000/experiments"
+      "http://127.0.0.1:5000/experiments"
   in
     Http.send FetchList (Http.get url decodeListExperiments)
 
 decodeExps =
-  Json.Decode.map6 Experiment
+  Json.Decode.map7 Experiment
     (field "name" Json.Decode.string)
     (field "excitation" Json.Decode.string)
     (field "damage" Json.Decode.string)
     (field "minseq" Json.Decode.int)
     (field "maxseq" Json.Decode.int)
     (field "range" Json.Decode.int)
-
+    (field "userlength" Json.Decode.string)
 decodeListExperiments =
   Json.Decode.list decodeExps
