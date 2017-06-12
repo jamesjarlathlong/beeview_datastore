@@ -3,7 +3,7 @@ from sqlalchemy.dialects import postgresql
 class accel_data(db.Model):
     node = db.Column(db.Integer, primary_key=True)
     axis = db.Column(db.String, primary_key=True)
-    seq_id = db.Column(db.BigInteger, primary_key=True)
+    seq_id = db.Column(db.BigInteger, primary_key=True, index = True)
     time_stamp = db.Column(db.BigInteger,unique=False)
     accel = db.Column(db.Integer, unique=False)
 

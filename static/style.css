@@ -1,0 +1,16 @@
+html *
+{
+   color: #252525;
+   font-family: "Helvetica Neue", Helvetica, sans-serif;
+   font-weight:300;
+
+}
+table { 
+  table-layout: fixed;
+  width: 100%
+}
+td {
+overflow: hidden;
+max-width: 100px;
+word-wrap: break-word;
+}
