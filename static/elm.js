@@ -9733,6 +9733,61 @@ var _user$project$Main$freqs = _elm_lang$core$Dict$fromList(
 			}
 		}
 	});
+var _user$project$Main$viewLen = function (exp) {
+	return A2(
+		_evancz$elm_sortable_table$Table$HtmlDetails,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$style(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'width', _1: '10%'},
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$div,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(
+						_elm_lang$core$Basics$toString(exp.range)),
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$Main$outputLength = _evancz$elm_sortable_table$Table$veryCustomColumn(
+	{
+		name: 'Length (s)',
+		viewData: _user$project$Main$viewLen,
+		sorter: _evancz$elm_sortable_table$Table$increasingOrDecreasingBy(
+			function (_) {
+				return _.range;
+			})
+	});
+var _user$project$Main$viewName = function (exp) {
+	return A2(
+		_evancz$elm_sortable_table$Table$HtmlDetails,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$div,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(exp.name),
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$Main$inputName = _evancz$elm_sortable_table$Table$veryCustomColumn(
+	{name: 'Name', viewData: _user$project$Main$viewName, sorter: _evancz$elm_sortable_table$Table$unsortable});
 var _user$project$Main$viewDownload = function (exp) {
 	return A2(
 		_evancz$elm_sortable_table$Table$HtmlDetails,
@@ -9777,10 +9832,10 @@ var _user$project$Main$viewDownload = function (exp) {
 								_0: _elm_lang$html$Html_Attributes$type_('hidden'),
 								_1: {
 									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$name('user_length'),
+									_0: _elm_lang$html$Html_Attributes$name('userstart'),
 									_1: {
 										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$value(exp.userlength),
+										_0: _elm_lang$html$Html_Attributes$value(exp.userstart),
 										_1: {ctor: '[]'}
 									}
 								}
@@ -9795,11 +9850,10 @@ var _user$project$Main$viewDownload = function (exp) {
 									_0: _elm_lang$html$Html_Attributes$type_('hidden'),
 									_1: {
 										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$name('min_sequence'),
+										_0: _elm_lang$html$Html_Attributes$name('userfinish'),
 										_1: {
 											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$value(
-												_elm_lang$core$Basics$toString(exp.minseq)),
+											_0: _elm_lang$html$Html_Attributes$value(exp.userfinish),
 											_1: {ctor: '[]'}
 										}
 									}
@@ -9814,11 +9868,11 @@ var _user$project$Main$viewDownload = function (exp) {
 										_0: _elm_lang$html$Html_Attributes$type_('hidden'),
 										_1: {
 											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$name('max_sequence'),
+											_0: _elm_lang$html$Html_Attributes$name('min_sequence'),
 											_1: {
 												ctor: '::',
 												_0: _elm_lang$html$Html_Attributes$value(
-													_elm_lang$core$Basics$toString(exp.maxseq)),
+													_elm_lang$core$Basics$toString(exp.minseq)),
 												_1: {ctor: '[]'}
 											}
 										}
@@ -9833,11 +9887,11 @@ var _user$project$Main$viewDownload = function (exp) {
 											_0: _elm_lang$html$Html_Attributes$type_('hidden'),
 											_1: {
 												ctor: '::',
-												_0: _elm_lang$html$Html_Attributes$name('freq'),
+												_0: _elm_lang$html$Html_Attributes$name('max_sequence'),
 												_1: {
 													ctor: '::',
 													_0: _elm_lang$html$Html_Attributes$value(
-														_elm_lang$core$Basics$toString(exp.userfreq)),
+														_elm_lang$core$Basics$toString(exp.maxseq)),
 													_1: {ctor: '[]'}
 												}
 											}
@@ -9846,18 +9900,38 @@ var _user$project$Main$viewDownload = function (exp) {
 									_1: {
 										ctor: '::',
 										_0: A2(
-											_elm_lang$html$Html$button,
+											_elm_lang$html$Html$input,
 											{
 												ctor: '::',
-												_0: _elm_lang$html$Html_Attributes$type_('submit'),
-												_1: {ctor: '[]'}
+												_0: _elm_lang$html$Html_Attributes$type_('hidden'),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$name('freq'),
+													_1: {
+														ctor: '::',
+														_0: _elm_lang$html$Html_Attributes$value(
+															_elm_lang$core$Basics$toString(exp.userfreq)),
+														_1: {ctor: '[]'}
+													}
+												}
 											},
-											{
-												ctor: '::',
-												_0: _elm_lang$html$Html$text('Download csv'),
-												_1: {ctor: '[]'}
-											}),
-										_1: {ctor: '[]'}
+											{ctor: '[]'}),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_elm_lang$html$Html$button,
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$type_('submit'),
+													_1: {ctor: '[]'}
+												},
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html$text('Download csv'),
+													_1: {ctor: '[]'}
+												}),
+											_1: {ctor: '[]'}
+										}
 									}
 								}
 							}
@@ -9896,12 +9970,19 @@ var _user$project$Main$getExpLength = F2(
 			'0',
 			A2(_elm_lang$core$Dict$get, fname, d));
 	});
+var _user$project$Main$zipExperimentFinish = F2(
+	function (userdefs, exp) {
+		var lenInSecs = A2(_user$project$Main$getExpLength, exp.name, userdefs);
+		return _elm_lang$core$Native_Utils.update(
+			exp,
+			{userfinish: lenInSecs});
+	});
 var _user$project$Main$zipExperimentLengths = F2(
 	function (userdefs, exp) {
 		var lenInSecs = A2(_user$project$Main$getExpLength, exp.name, userdefs);
 		return _elm_lang$core$Native_Utils.update(
 			exp,
-			{userlength: lenInSecs});
+			{userstart: lenInSecs});
 	});
 var _user$project$Main$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$none;
@@ -9930,17 +10011,18 @@ var _user$project$Main$decodeExps = A6(
 	A2(_elm_lang$core$Json_Decode$field, 'minseq', _elm_lang$core$Json_Decode$int),
 	A2(_elm_lang$core$Json_Decode$field, 'maxseq', _elm_lang$core$Json_Decode$int));
 var _user$project$Main$decodeListExperiments = _elm_lang$core$Json_Decode$list(_user$project$Main$decodeExps);
-var _user$project$Main$Experiment = F8(
-	function (a, b, c, d, e, f, g, h) {
-		return {name: a, excitation: b, damage: c, minseq: d, maxseq: e, range: f, userlength: g, userfreq: h};
+var _user$project$Main$Experiment = F9(
+	function (a, b, c, d, e, f, g, h, i) {
+		return {name: a, excitation: b, damage: c, minseq: d, maxseq: e, range: f, userstart: g, userfinish: h, userfreq: i};
 	});
 var _user$project$Main$unraw = function (_p0) {
 	var _p1 = _p0;
 	var _p3 = _p1.minseq;
 	var _p2 = _p1.maxseq;
+	var inituserstart = _elm_lang$core$Basics$toString(0);
 	var range = ((_p2 - _p3) / 1000) | 0;
-	var inituserlength = _elm_lang$core$Basics$toString(range);
-	return A8(_user$project$Main$Experiment, _p1.name, _p1.excitation, _p1.damage, _p3, _p2, range, inituserlength, 1000);
+	var inituserfinish = _elm_lang$core$Basics$toString(range);
+	return A9(_user$project$Main$Experiment, _p1.name, _p1.excitation, _p1.damage, _p3, _p2, range, inituserstart, inituserfinish, 1000);
 };
 var _user$project$Main$FileLength = F2(
 	function (a, b) {
@@ -9950,9 +10032,9 @@ var _user$project$Main$FileFreq = F2(
 	function (a, b) {
 		return {file: a, freq: b};
 	});
-var _user$project$Main$Model = F5(
-	function (a, b, c, d, e) {
-		return {experimentlist: a, tableState: b, query: c, lenParams: d, freqParams: e};
+var _user$project$Main$Model = F6(
+	function (a, b, c, d, e, f) {
+		return {experimentlist: a, tableState: b, query: c, lenParams: d, finishParams: e, freqParams: f};
 	});
 var _user$project$Main$SelectFreq = function (a) {
 	return {ctor: 'SelectFreq', _0: a};
@@ -9976,7 +10058,16 @@ var _user$project$Main$viewFreq = function (exp) {
 			_elm_community$html_extra$Html_Events_Extra$targetValueIntParse));
 	return A2(
 		_evancz$elm_sortable_table$Table$HtmlDetails,
-		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$style(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'width', _1: '10%'},
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		},
 		{
 			ctor: '::',
 			_0: A2(
@@ -9992,6 +10083,56 @@ var _user$project$Main$viewFreq = function (exp) {
 };
 var _user$project$Main$inputFreq = _evancz$elm_sortable_table$Table$veryCustomColumn(
 	{name: 'Desired frequency (Hz)', viewData: _user$project$Main$viewFreq, sorter: _evancz$elm_sortable_table$Table$unsortable});
+var _user$project$Main$SelectSubfinish = function (a) {
+	return {ctor: 'SelectSubfinish', _0: a};
+};
+var _user$project$Main$applyFilefin = F2(
+	function (filename, desiredlen) {
+		return _user$project$Main$SelectSubfinish(
+			A2(_user$project$Main$FileLength, filename, desiredlen));
+	});
+var _user$project$Main$viewInputf = function (exp) {
+	return A2(
+		_evancz$elm_sortable_table$Table$HtmlDetails,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$style(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'width', _1: '10%'},
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$input,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$type_('number'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$min('1'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$max(
+								_elm_lang$core$Basics$toString(exp.range)),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Events$onInput(
+									_user$project$Main$applyFilefin(exp.name)),
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				},
+				{ctor: '[]'}),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$Main$inputFinish = _evancz$elm_sortable_table$Table$veryCustomColumn(
+	{name: 'Desired finish second', viewData: _user$project$Main$viewInputf, sorter: _evancz$elm_sortable_table$Table$unsortable});
 var _user$project$Main$SelectSubrange = function (a) {
 	return {ctor: 'SelectSubrange', _0: a};
 };
@@ -10000,10 +10141,19 @@ var _user$project$Main$applyFilelen = F2(
 		return _user$project$Main$SelectSubrange(
 			A2(_user$project$Main$FileLength, filename, desiredlen));
 	});
-var _user$project$Main$viewInput = function (exp) {
+var _user$project$Main$viewInputs = function (exp) {
 	return A2(
 		_evancz$elm_sortable_table$Table$HtmlDetails,
-		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$style(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'width', _1: '10%'},
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		},
 		{
 			ctor: '::',
 			_0: A2(
@@ -10031,8 +10181,8 @@ var _user$project$Main$viewInput = function (exp) {
 			_1: {ctor: '[]'}
 		});
 };
-var _user$project$Main$inputLength = _evancz$elm_sortable_table$Table$veryCustomColumn(
-	{name: 'Desired length (s)', viewData: _user$project$Main$viewInput, sorter: _evancz$elm_sortable_table$Table$unsortable});
+var _user$project$Main$inputStart = _evancz$elm_sortable_table$Table$veryCustomColumn(
+	{name: 'Desired start second', viewData: _user$project$Main$viewInputs, sorter: _evancz$elm_sortable_table$Table$unsortable});
 var _user$project$Main$SetTableState = function (a) {
 	return {ctor: 'SetTableState', _0: a};
 };
@@ -10052,12 +10202,7 @@ var _user$project$Main$config = _evancz$elm_sortable_table$Table$customConfig(
 				}),
 			_1: {
 				ctor: '::',
-				_0: A2(
-					_evancz$elm_sortable_table$Table$intColumn,
-					'Length (s)',
-					function (_) {
-						return _.range;
-					}),
+				_0: _user$project$Main$outputLength,
 				_1: {
 					ctor: '::',
 					_0: A2(
@@ -10076,14 +10221,18 @@ var _user$project$Main$config = _evancz$elm_sortable_table$Table$customConfig(
 							}),
 						_1: {
 							ctor: '::',
-							_0: _user$project$Main$inputLength,
+							_0: _user$project$Main$inputStart,
 							_1: {
 								ctor: '::',
-								_0: _user$project$Main$inputFreq,
+								_0: _user$project$Main$inputFinish,
 								_1: {
 									ctor: '::',
-									_0: _user$project$Main$downloadColumn,
-									_1: {ctor: '[]'}
+									_0: _user$project$Main$inputFreq,
+									_1: {
+										ctor: '::',
+										_0: _user$project$Main$downloadColumn,
+										_1: {ctor: '[]'}
+									}
 								}
 							}
 						}
@@ -10100,14 +10249,18 @@ var _user$project$Main$SetQuery = function (a) {
 };
 var _user$project$Main$view = function (_p4) {
 	var _p5 = _p4;
-	var withlengths = A2(
+	var withstart = A2(
 		_elm_lang$core$List$map,
 		_user$project$Main$zipExperimentLengths(_p5.lenParams),
 		_p5.experimentlist);
+	var withfinish = A2(
+		_elm_lang$core$List$map,
+		_user$project$Main$zipExperimentFinish(_p5.finishParams),
+		withstart);
 	var withlengthsfreqs = A2(
 		_elm_lang$core$List$map,
 		_user$project$Main$zipExperimentFreqs(_p5.freqParams),
-		withlengths);
+		withfinish);
 	var lowerQuery = _elm_lang$core$String$toLower(_p5.query);
 	var acceptableExperiments = A2(
 		_elm_lang$core$List$filter,
@@ -10164,7 +10317,7 @@ var _user$project$Main$FetchList = function (a) {
 	return {ctor: 'FetchList', _0: a};
 };
 var _user$project$Main$fetchExperiments = function () {
-	var url = 'http://127.0.0.1:5000/experiments';
+	var url = 'http://beeview1.mit.edu/experiments';
 	return A2(
 		_elm_lang$http$Http$send,
 		_user$project$Main$FetchList,
@@ -10176,6 +10329,7 @@ var _user$project$Main$init = function () {
 		tableState: _evancz$elm_sortable_table$Table$initialSort('name'),
 		query: '',
 		lenParams: _elm_lang$core$Dict$empty,
+		finishParams: _elm_lang$core$Dict$empty,
 		freqParams: _elm_lang$core$Dict$empty
 	};
 	return {ctor: '_Tuple2', _0: model, _1: _user$project$Main$fetchExperiments};
@@ -10227,14 +10381,25 @@ var _user$project$Main$update = F2(
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			default:
+			case 'SelectSubfinish':
 				var _p9 = _p7._0;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
-							freqParams: A3(_elm_lang$core$Dict$insert, _p9.file, _p9.freq, model.freqParams)
+							finishParams: A3(_elm_lang$core$Dict$insert, _p9.file, _p9.len, model.finishParams)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			default:
+				var _p10 = _p7._0;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							freqParams: A3(_elm_lang$core$Dict$insert, _p10.file, _p10.freq, model.freqParams)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};

@@ -1,20 +1,6 @@
 import functools
 import itertools
-def with_connection(mod, db_filename, f):
-    def with_connection_(*args, **kwargs):
-        # or use a pool, or a factory function...
-        cnn = mod.connect(db_filename)
-        try:
-            rv = f(cnn, *args, **kwargs)
-        except Exception as e:
-            cnn.rollback()
-            raise
-        else:
-            cnn.commit() # or maybe not
-        finally:
-            cnn.close()
-        return rv
-    return with_connection_
+
 def ld_to_dl(list_of_dicts):
     return dict(zip(list_of_dicts[0],zip(*[d.values() for d in list_of_dicts])))
 def lazy_flattener(iterofiters):

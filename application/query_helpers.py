@@ -1,4 +1,11 @@
 import collections
+def withstreamingconn(engine, f):
+    def with_connection_(*args, **kwargs):
+        # or use a pool, or a factory function...
+        with engine.connect() as cnn:
+            result = f(cnn, *args, **kwargs)
+            return result
+    return with_connection_
 def extract_meta(row):
     return {'name': row.folder_name,
             'damage': row.damage, 'excitation': row.excitation,

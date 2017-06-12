@@ -6,11 +6,15 @@ html *
 
 }
 table { 
-  table-layout: fixed;
-  width: 100%
+  table-layout: auto;
+  width: 100%;  
+
 }
 td {
-overflow: hidden;
-max-width: 100px;
-word-wrap: break-word;
+	overflow: hidden;
+	word-wrap: break-word;
+}
+
+td div {
+	width:60%;
 }
