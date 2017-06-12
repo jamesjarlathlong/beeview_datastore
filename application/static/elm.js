@@ -9780,7 +9780,12 @@ var _user$project$Main$viewDownload = function (exp) {
 									_0: _elm_lang$html$Html_Attributes$name('user_length'),
 									_1: {
 										ctor: '::',
+<<<<<<< HEAD
+										_0: _elm_lang$html$Html_Attributes$value(
+											_elm_lang$core$Basics$toString(exp.userlength)),
+=======
 										_0: _elm_lang$html$Html_Attributes$value(exp.userlength),
+>>>>>>> acd7742e4e046f7a04d827027873fbe5a1e8dce3
 										_1: {ctor: '[]'}
 									}
 								}
@@ -9827,6 +9832,20 @@ var _user$project$Main$viewDownload = function (exp) {
 								_1: {
 									ctor: '::',
 									_0: A2(
+<<<<<<< HEAD
+										_elm_lang$html$Html$button,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$type_('submit'),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('Download csv'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+=======
 										_elm_lang$html$Html$input,
 										{
 											ctor: '::',
@@ -9859,6 +9878,7 @@ var _user$project$Main$viewDownload = function (exp) {
 											}),
 										_1: {ctor: '[]'}
 									}
+>>>>>>> acd7742e4e046f7a04d827027873fbe5a1e8dce3
 								}
 							}
 						}
@@ -9868,6 +9888,9 @@ var _user$project$Main$viewDownload = function (exp) {
 		});
 };
 var _user$project$Main$downloadColumn = _evancz$elm_sortable_table$Table$veryCustomColumn(
+<<<<<<< HEAD
+	{name: '', viewData: _user$project$Main$viewDownload, sorter: _evancz$elm_sortable_table$Table$unsortable});
+=======
 	{name: 'Download', viewData: _user$project$Main$viewDownload, sorter: _evancz$elm_sortable_table$Table$unsortable});
 var _user$project$Main$toRowAttrs = {
 	ctor: '::',
@@ -9889,6 +9912,7 @@ var _user$project$Main$zipExperimentFreqs = F2(
 			exp,
 			{userfreq: freq});
 	});
+>>>>>>> acd7742e4e046f7a04d827027873fbe5a1e8dce3
 var _user$project$Main$getExpLength = F2(
 	function (fname, d) {
 		return A2(
@@ -9917,6 +9941,15 @@ var _user$project$Main$negateArray = F2(
 			_user$project$Main$negate(index),
 			arr);
 	});
+<<<<<<< HEAD
+var _user$project$Main$Experiment = F7(
+	function (a, b, c, d, e, f, g) {
+		return {name: a, excitation: b, damage: c, minseq: d, maxseq: e, range: f, userlength: g};
+	});
+var _user$project$Main$decodeExps = A8(
+	_elm_lang$core$Json_Decode$map7,
+	_user$project$Main$Experiment,
+=======
 var _user$project$Main$RawExperiment = F5(
 	function (a, b, c, d, e) {
 		return {name: a, excitation: b, damage: c, minseq: d, maxseq: e};
@@ -9924,10 +9957,17 @@ var _user$project$Main$RawExperiment = F5(
 var _user$project$Main$decodeExps = A6(
 	_elm_lang$core$Json_Decode$map5,
 	_user$project$Main$RawExperiment,
+>>>>>>> acd7742e4e046f7a04d827027873fbe5a1e8dce3
 	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
 	A2(_elm_lang$core$Json_Decode$field, 'excitation', _elm_lang$core$Json_Decode$string),
 	A2(_elm_lang$core$Json_Decode$field, 'damage', _elm_lang$core$Json_Decode$string),
 	A2(_elm_lang$core$Json_Decode$field, 'minseq', _elm_lang$core$Json_Decode$int),
+<<<<<<< HEAD
+	A2(_elm_lang$core$Json_Decode$field, 'maxseq', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'range', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'userlength', _elm_lang$core$Json_Decode$string));
+var _user$project$Main$decodeListExperiments = _elm_lang$core$Json_Decode$list(_user$project$Main$decodeExps);
+=======
 	A2(_elm_lang$core$Json_Decode$field, 'maxseq', _elm_lang$core$Json_Decode$int));
 var _user$project$Main$decodeListExperiments = _elm_lang$core$Json_Decode$list(_user$project$Main$decodeExps);
 var _user$project$Main$Experiment = F8(
@@ -9942,10 +9982,25 @@ var _user$project$Main$unraw = function (_p0) {
 	var inituserlength = _elm_lang$core$Basics$toString(range);
 	return A8(_user$project$Main$Experiment, _p1.name, _p1.excitation, _p1.damage, _p3, _p2, range, inituserlength, 1000);
 };
+>>>>>>> acd7742e4e046f7a04d827027873fbe5a1e8dce3
 var _user$project$Main$FileLength = F2(
 	function (a, b) {
 		return {file: a, len: b};
 	});
+<<<<<<< HEAD
+var _user$project$Main$Model = F4(
+	function (a, b, c, d) {
+		return {experimentlist: a, tableState: b, query: c, downloadParams: d};
+	});
+var _user$project$Main$SelectSubrange = function (a) {
+	return {ctor: 'SelectSubrange', _0: a};
+};
+var _user$project$Main$applyFilelen = F2(
+	function (filename, desiredlen) {
+		return _user$project$Main$SelectSubrange(
+			A2(_user$project$Main$FileLength, filename, desiredlen));
+	});
+=======
 var _user$project$Main$FileFreq = F2(
 	function (a, b) {
 		return {file: a, freq: b};
@@ -10000,6 +10055,7 @@ var _user$project$Main$applyFilelen = F2(
 		return _user$project$Main$SelectSubrange(
 			A2(_user$project$Main$FileLength, filename, desiredlen));
 	});
+>>>>>>> acd7742e4e046f7a04d827027873fbe5a1e8dce3
 var _user$project$Main$viewInput = function (exp) {
 	return A2(
 		_evancz$elm_sortable_table$Table$HtmlDetails,
@@ -10032,7 +10088,11 @@ var _user$project$Main$viewInput = function (exp) {
 		});
 };
 var _user$project$Main$inputLength = _evancz$elm_sortable_table$Table$veryCustomColumn(
+<<<<<<< HEAD
+	{name: '', viewData: _user$project$Main$viewInput, sorter: _evancz$elm_sortable_table$Table$unsortable});
+=======
 	{name: 'Desired length (s)', viewData: _user$project$Main$viewInput, sorter: _evancz$elm_sortable_table$Table$unsortable});
+>>>>>>> acd7742e4e046f7a04d827027873fbe5a1e8dce3
 var _user$project$Main$SetTableState = function (a) {
 	return {ctor: 'SetTableState', _0: a};
 };
@@ -10079,12 +10139,17 @@ var _user$project$Main$config = _evancz$elm_sortable_table$Table$customConfig(
 							_0: _user$project$Main$inputLength,
 							_1: {
 								ctor: '::',
+<<<<<<< HEAD
+								_0: _user$project$Main$downloadColumn,
+								_1: {ctor: '[]'}
+=======
 								_0: _user$project$Main$inputFreq,
 								_1: {
 									ctor: '::',
 									_0: _user$project$Main$downloadColumn,
 									_1: {ctor: '[]'}
 								}
+>>>>>>> acd7742e4e046f7a04d827027873fbe5a1e8dce3
 							}
 						}
 					}
@@ -10098,6 +10163,15 @@ var _user$project$Main$config = _evancz$elm_sortable_table$Table$customConfig(
 var _user$project$Main$SetQuery = function (a) {
 	return {ctor: 'SetQuery', _0: a};
 };
+<<<<<<< HEAD
+var _user$project$Main$view = function (_p0) {
+	var _p1 = _p0;
+	var withlengths = A2(
+		_elm_lang$core$List$map,
+		_user$project$Main$zipExperimentLengths(_p1.downloadParams),
+		_p1.experimentlist);
+	var lowerQuery = _elm_lang$core$String$toLower(_p1.query);
+=======
 var _user$project$Main$view = function (_p4) {
 	var _p5 = _p4;
 	var withlengths = A2(
@@ -10109,6 +10183,7 @@ var _user$project$Main$view = function (_p4) {
 		_user$project$Main$zipExperimentFreqs(_p5.freqParams),
 		withlengths);
 	var lowerQuery = _elm_lang$core$String$toLower(_p5.query);
+>>>>>>> acd7742e4e046f7a04d827027873fbe5a1e8dce3
 	var acceptableExperiments = A2(
 		_elm_lang$core$List$filter,
 		function (_p6) {
@@ -10120,12 +10195,25 @@ var _user$project$Main$view = function (_p4) {
 						return _.name;
 					}(_p6)));
 		},
+<<<<<<< HEAD
+		withlengths);
+=======
 		withlengthsfreqs);
+>>>>>>> acd7742e4e046f7a04d827027873fbe5a1e8dce3
 	return A2(
 		_elm_lang$html$Html$div,
 		{
 			ctor: '::',
+<<<<<<< HEAD
+			_0: _elm_lang$html$Html_Attributes$style(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'font-family', _1: 'Arial'},
+					_1: {ctor: '[]'}
+				}),
+=======
 			_0: _elm_lang$html$Html_Attributes$class('container'),
+>>>>>>> acd7742e4e046f7a04d827027873fbe5a1e8dce3
 			_1: {ctor: '[]'}
 		},
 		{
@@ -10175,8 +10263,12 @@ var _user$project$Main$init = function () {
 		experimentlist: {ctor: '[]'},
 		tableState: _evancz$elm_sortable_table$Table$initialSort('name'),
 		query: '',
+<<<<<<< HEAD
+		downloadParams: _elm_lang$core$Dict$empty
+=======
 		lenParams: _elm_lang$core$Dict$empty,
 		freqParams: _elm_lang$core$Dict$empty
+>>>>>>> acd7742e4e046f7a04d827027873fbe5a1e8dce3
 	};
 	return {ctor: '_Tuple2', _0: model, _1: _user$project$Main$fetchExperiments};
 }();
@@ -10227,14 +10319,29 @@ var _user$project$Main$update = F2(
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
+<<<<<<< HEAD
+			case 'SetTableState':
+=======
 			default:
 				var _p9 = _p7._0;
+>>>>>>> acd7742e4e046f7a04d827027873fbe5a1e8dce3
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
 							freqParams: A3(_elm_lang$core$Dict$insert, _p9.file, _p9.freq, model.freqParams)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			default:
+				var _p4 = _p3._0;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							downloadParams: A3(_elm_lang$core$Dict$insert, _p4.file, _p4.len, model.downloadParams)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};

@@ -34,8 +34,6 @@ def experiments():
     #all_experiments = [{'name':'experiment1','excitation':'longambientfake','range':10000000,'damage':'undamagedfake','minseq':2,'maxseq':120000000}]
     return Response(json.dumps(all_experiments), status = 200)
 
-
-
 @application.route('/large.csv', methods = ['POST'])
 def generate_large_csv():
     #start_seq = request.form.min_sequence
