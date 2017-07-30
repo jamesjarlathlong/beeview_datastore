@@ -1,5 +1,7 @@
 import collections
 from application.translation_dicts import namer_dict, mult_dict
+import functools
+import itertools
 def withstreamingconn(engine, f):
     def with_connection_(*args, **kwargs):
         # or use a pool, or a factory function...
@@ -11,6 +13,15 @@ def extract_meta(row):
     return {'name': row.folder_name,
             'damage': row.damage, 'excitation': row.excitation,
             'minseq':row.min_sequence_id, 'maxseq':row.max_sequence_id}
+def shorten_name(name):
+    shortcuts = [('whitenoise','wgn'),('white_noise', 'wgn'), ('three_elements_removed','3missing')]
+    def shortener(acc, new):
+        return acc.replace(new[0], new[1])
+    shortened = functools.reduce(shortener, shortcuts, name )
+    return shortened
+def nickname(row):
+    row['name'] = shorten_name(row['name'])
+    return row
 def just_data(row):
     return row[1]
 def dict_translator(translation, d):
@@ -49,5 +60,6 @@ def get_arrs(query):
     translated = (arraydict_translator(translation, arr) for arr in just_arrays)
     tstamped_arrs = (merge_timestep(onet) for onet in translated)
     translated_arrs = (translate_to_consistent(arr) for arr in tstamped_arrs)
+    #skipped = itertools.islice(translated_arrs, 0, None, take_every)
     return translated_arrs
 
